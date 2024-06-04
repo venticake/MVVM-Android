@@ -55,16 +55,16 @@ public class TodoListFragment extends Fragment {
             // clear fragment
             getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             // Todo : 현재는 더미데이터를 기반으로 같은 내용의 TodoItemFragment를 만들고 있다. id를 기반으로 Usecase를
-            //  거쳐 Realm에서 데이터를 가져올지, 단순하게 Fragment의 매개변수로 값을 처리할 지 고민해봐야한다. (이 경우에 Fragment -> ViewModel로 값을 어떻게 보낼 지 고민해봐야한다.)
+            //  거쳐 Realm에서 데이터를 가져올지, 단순하게 Fragment의 매개변수로 값을 처리할 지 고민해보자. (이 경우에 Fragment -> ViewModel로 값을 어떻게 보낼 지 고민해봐야한다.)
             for (TodoItem todo : todoList) {
-                addTodoItemFragment();
+                addTodoItemFragment(todo);
             }
         });
     }
 
-    public void addTodoItemFragment(){
+    public void addTodoItemFragment(TodoItem todo){
         int todoId = ++todoCounter;
-        TodoItemFragment todoItemFragment = TodoItemFragment.newInstance();
+        TodoItemFragment todoItemFragment = TodoItemFragment.newInstance(todo);
 
         String fragmentTag = "todoItemFragment" + todoId;
 

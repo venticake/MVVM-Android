@@ -4,23 +4,27 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mvvm_android.domain.usecase.UpdateTodoStatusUseCase;
+
 public class TodoItemViewModel extends ViewModel {
     private final MutableLiveData<String> content = new MutableLiveData<>("This is content");
-    private final MutableLiveData<Boolean> checked = new MutableLiveData<>(false);
-    private final MutableLiveData<String> createdDate = new MutableLiveData<>("This is time");
+    private final MutableLiveData<Boolean> completed = new MutableLiveData<>(false);
+    private final MutableLiveData<String> createdAt = new MutableLiveData<>("This is time");
 
 
     public LiveData<String> getContent(){
         return content;
     }
-    public LiveData<Boolean> isChecked() { return checked; }
-    public LiveData<String> getCreatedDate(){
-        return createdDate;
+    public LiveData<Boolean> isChecked() { return completed; }
     public LiveData<String> getCreatedAt(){
         return createdAt;
     }
 
-    public TodoItemViewModel() {
+    private UpdateTodoStatusUseCase updateTodoStatusUseCase;
+
+    public TodoItemViewModel(){
+        this.updateTodoStatusUseCase = new UpdateTodoStatusUseCase();
+    }
 
     public void setTodoItem(String content, String createdAt, Boolean completed){
         this.content.setValue(content);
@@ -34,8 +38,8 @@ public class TodoItemViewModel extends ViewModel {
      * */
     public void onDoneClicked(){
 
-        checked.setValue(Boolean.FALSE.equals(checked.getValue()));
-
+        this.completed.setValue(Boolean.FALSE.equals(this.completed.getValue()));
+        updateTodoStatusUseCase.execute(getCreatedAt().getValue(), isChecked().getValue());
     }
 
 }

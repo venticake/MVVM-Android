@@ -9,7 +9,7 @@ public class UpdateTodoStatusUseCase {
         this.todoRepository = new TodoRepository();
     }
 
-    public void execute(int todoId, boolean status) {
-
+    public void execute(String createdAt, boolean status) {
+        todoRepository.updateTodoStatus(createdAt, status);
     }
 }

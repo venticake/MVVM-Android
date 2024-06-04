@@ -28,4 +28,12 @@ public class TodoRepository {
     public RealmResults<Todo> getAllTodos(){
         return realm.where(Todo.class).findAll();
     }
+
+    public void updateTodoStatus(final String CreatedAt, boolean completed){
+        this.realm.executeTransaction(realm -> {
+            Todo todo = realm.where(Todo.class).equalTo("datetime", CreatedAt).findFirst();
+            assert todo != null;
+            todo.setCompleted(completed);
+        });
+    }
 }
