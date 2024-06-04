@@ -10,7 +10,7 @@ import java.util.List;
 import io.realm.RealmResults;
 
 public class GetAllTodoUseCase {
-    private TodoRepository todoRepository;
+    private final TodoRepository todoRepository;
 
     public GetAllTodoUseCase() {
         todoRepository = new TodoRepository();

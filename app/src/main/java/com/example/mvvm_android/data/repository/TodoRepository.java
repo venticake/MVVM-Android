@@ -6,7 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class TodoRepository {
-    private Realm realm;
+    private final Realm realm;
 
     public TodoRepository(){
         this.realm = Realm.getDefaultInstance();
@@ -21,9 +21,7 @@ public class TodoRepository {
     }
 
     public void clearAllTodos(){
-        this.realm.executeTransaction(realm -> {
-            realm.deleteAll();
-        });
+        this.realm.executeTransaction(realm -> realm.deleteAll());
     }
 
     public RealmResults<Todo> getAllTodos(){

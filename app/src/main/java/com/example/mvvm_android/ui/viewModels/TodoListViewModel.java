@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TodoListViewModel extends ViewModel {
 
-    private MutableLiveData<List<TodoItem>> todoList = new MutableLiveData<>();
+    private final MutableLiveData<List<TodoItem>> todoList = new MutableLiveData<>();
 
     public LiveData<List<TodoItem>> getTodoList() {
         return todoList;
