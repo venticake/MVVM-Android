@@ -8,9 +8,9 @@
 
 UI : Todo list와 Todo card로 구성되어 있습니다.
 
-Data : Todo에 대한 정보를 담고 있습니다.
-
 Domain : Todo와 관련된 useCase와 model을 담고 있습니다.
+
+Data : Realm을 이용하여 Todo에 대한 정보를 담고 있습니다. (내용, 추가 시간, 완료 여부)
 
 * 참조한 문서
 
