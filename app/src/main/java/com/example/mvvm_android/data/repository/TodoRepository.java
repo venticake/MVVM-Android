@@ -20,11 +20,9 @@ public class TodoRepository {
         });
     }
 
-    public void updateTodoStatus(final long id, final boolean completed){
-        realm.executeTransaction(realm -> {
-            Todo todo = realm.where(Todo.class).equalTo("id", id).findFirst();
-            assert todo != null;
-            todo.setCompleted(completed);
+    public void clearAllTodos(){
+        this.realm.executeTransaction(realm -> {
+            realm.deleteAll();
         });
     }
 
