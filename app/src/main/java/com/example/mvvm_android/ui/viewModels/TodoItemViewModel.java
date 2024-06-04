@@ -16,10 +16,16 @@ public class TodoItemViewModel extends ViewModel {
     public LiveData<Boolean> isChecked() { return checked; }
     public LiveData<String> getCreatedDate(){
         return createdDate;
+    public LiveData<String> getCreatedAt(){
+        return createdAt;
     }
 
     public TodoItemViewModel() {
 
+    public void setTodoItem(String content, String createdAt, Boolean completed){
+        this.content.setValue(content);
+        this.createdAt.setValue(createdAt);
+        this.completed.setValue(completed);
     }
 
     /**

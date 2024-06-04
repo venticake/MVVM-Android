@@ -17,6 +17,7 @@ public class TodoRepository {
             Todo todo = realm.createObject(Todo.class, System.currentTimeMillis());
             todo.setContent(content);
             todo.setCompleted(false);
+            todo.setDatetime(String.valueOf(System.currentTimeMillis()));
         });
     }
 

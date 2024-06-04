@@ -4,13 +4,13 @@ public class TodoItem {
     private long id;
     private String content;
     private boolean completed;
-    private String createdDate;
+    private String createdAt;
 
-    public TodoItem(long id, String content, boolean completed, String createdDate) {
+    public TodoItem(long id, String content, boolean completed, String createdAt) {
         this.id = id;
         this.content = content;
         this.completed = completed;
-        this.createdDate = createdDate;
+        this.createdAt = createdAt;
     }
 
     public long getId() {
@@ -37,11 +37,11 @@ public class TodoItem {
         this.completed = completed;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

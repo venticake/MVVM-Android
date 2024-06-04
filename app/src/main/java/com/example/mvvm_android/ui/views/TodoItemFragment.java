@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentTodoItemBinding;
+import com.example.mvvm_android.domain.model.TodoItem;
 import com.example.mvvm_android.ui.viewModels.TodoItemViewModel;
 
 public class TodoItemFragment extends Fragment {
@@ -24,9 +25,13 @@ public class TodoItemFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TodoItemFragment newInstance() {
+    public static TodoItemFragment newInstance(TodoItem todoItem) {
         TodoItemFragment fragment = new TodoItemFragment();
         Bundle args = new Bundle();
+        // 이걸 나눠서 담아..?
+        args.putString("content", todoItem.getContent());
+        args.putString("createdAt", todoItem.getCreatedAt());
+        args.putBoolean("completed", todoItem.isCompleted());
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,8 +39,6 @@ public class TodoItemFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -54,5 +57,14 @@ public class TodoItemFragment extends Fragment {
         todoItemViewModel = new ViewModelProvider(this).get(TodoItemViewModel.class);
         binding.setViewModel(todoItemViewModel);
         binding.setLifecycleOwner(this);
+
+        // 이게 onCreated가 아니라 onViewCreated에 있어도 괜찮은가?
+        if (getArguments() != null) {
+            String content = getArguments().getString("content");
+            String createdAt = getArguments().getString("createdAt");
+            boolean completed = getArguments().getBoolean("completed");
+
+            todoItemViewModel.setTodoItem(content, createdAt, completed);
+        }
     }
 }
