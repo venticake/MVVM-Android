@@ -1,9 +1,9 @@
-package com.example.mvvm_android.data.local;
+package com.example.mvvm_android.todoList.data.local;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Todo extends RealmObject {
+public class TodoRecord extends RealmObject {
     @PrimaryKey
     private long id;
     private String content;

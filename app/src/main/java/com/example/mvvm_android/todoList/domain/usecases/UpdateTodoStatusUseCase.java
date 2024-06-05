@@ -1,6 +1,6 @@
-package com.example.mvvm_android.domain.usecase;
+package com.example.mvvm_android.todoList.domain.usecases;
 
-import com.example.mvvm_android.data.repository.TodoRepository;
+import com.example.mvvm_android.todoList.data.repository.TodoRepository;
 
 public class UpdateTodoStatusUseCase {
     private final TodoRepository todoRepository;

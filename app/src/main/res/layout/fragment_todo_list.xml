@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.mvvm_android.ui.viewModels.TodoListViewModel" />
+            type="com.example.mvvm_android.todoList.ui.viewModels.TodoListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.views.TodoListFragment">
+        tools:context=".todoList.ui.views.TodoListFragment">
 
         <LinearLayout
             android:id="@+id/FragmentContainerView"

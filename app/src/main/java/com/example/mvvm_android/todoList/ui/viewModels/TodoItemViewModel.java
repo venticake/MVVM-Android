@@ -1,15 +1,18 @@
-package com.example.mvvm_android.ui.viewModels;
+package com.example.mvvm_android.todoList.ui.viewModels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mvvm_android.domain.usecase.UpdateTodoStatusUseCase;
+import com.example.mvvm_android.todoList.domain.usecases.UpdateTodoStatusUseCase;
+import com.example.mvvm_android.util.SingleLiveEvent;
 
 public class TodoItemViewModel extends ViewModel {
     private final MutableLiveData<String> content = new MutableLiveData<>("This is content");
     private final MutableLiveData<Boolean> completed = new MutableLiveData<>(false);
     private final MutableLiveData<String> createdAt = new MutableLiveData<>("This is time");
+
+    private final SingleLiveEvent<Void> startTodoDetailActivity = new SingleLiveEvent<>();
 
 
     public LiveData<String> getContent(){
@@ -19,6 +22,7 @@ public class TodoItemViewModel extends ViewModel {
     public LiveData<String> getCreatedAt(){
         return createdAt;
     }
+    public LiveData<Void> getStartTodoDetailActivity(){ return startTodoDetailActivity; }
 
     private UpdateTodoStatusUseCase updateTodoStatusUseCase;
 
@@ -40,6 +44,10 @@ public class TodoItemViewModel extends ViewModel {
 
         this.completed.setValue(Boolean.FALSE.equals(this.completed.getValue()));
         updateTodoStatusUseCase.execute(getCreatedAt().getValue(), isChecked().getValue());
+    }
+
+    public void startTodoDetailActivity(){
+        startTodoDetailActivity.call();
     }
 
 }

@@ -1,12 +1,12 @@
-package com.example.mvvm_android.domain.model;
+package com.example.mvvm_android.todoList.domain.models;
 
-public class TodoItem {
+public class Todo {
     private long id;
     private String content;
     private boolean completed;
     private String createdAt;
 
-    public TodoItem(long id, String content, boolean completed, String createdAt) {
+    public Todo(long id, String content, boolean completed, String createdAt) {
         this.id = id;
         this.content = content;
         this.completed = completed;

@@ -6,13 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.mvvm_android.ui.viewModels.TodoItemViewModel" />
+            type="com.example.mvvm_android.todoList.ui.viewModels.TodoItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.views.TodoItemFragment">
+        android:onClick="@{() -> viewModel.startTodoDetailActivity()}"
+        tools:context=".todoList.ui.views.TodoItemFragment">
 
         <TextView
             android:id="@+id/TodoContent"

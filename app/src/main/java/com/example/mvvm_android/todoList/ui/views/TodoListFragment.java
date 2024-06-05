@@ -1,6 +1,9 @@
-package com.example.mvvm_android.ui.views;
+package com.example.mvvm_android.todoList.ui.views;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,14 +13,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.mvvm_android.R;
+import com.example.mvvm_android.todoList.ui.viewModels.TodoListViewModel;
 import com.example.mvvm_android.databinding.FragmentTodoListBinding;
-import com.example.mvvm_android.domain.model.TodoItem;
-import com.example.mvvm_android.ui.viewModels.TodoListViewModel;
+import com.example.mvvm_android.todoList.domain.models.Todo;
 
 public class TodoListFragment extends Fragment {
     private TodoListViewModel todoListViewModel;
@@ -46,7 +45,8 @@ public class TodoListFragment extends Fragment {
 
         todoListViewModel = new ViewModelProvider(this).get(TodoListViewModel.class);
         binding.setViewModel(todoListViewModel);
-        binding.setLifecycleOwner(this);
+        // LifecyleOwner에 fragment 대신 Fragment's view lifecycle 사용
+        binding.setLifecycleOwner(getViewLifecycleOwner());
 
         // todoList가 update될 때마다 TodoItemFragment를 추가
         // 지금 상태는 다 지우고 새로 업데이트 한다 -> 매우 비효율적
@@ -56,13 +56,16 @@ public class TodoListFragment extends Fragment {
             getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             // Todo : 현재는 더미데이터를 기반으로 같은 내용의 TodoItemFragment를 만들고 있다. id를 기반으로 Usecase를
             //  거쳐 Realm에서 데이터를 가져올지, 단순하게 Fragment의 매개변수로 값을 처리할 지 고민해보자. (이 경우에 Fragment -> ViewModel로 값을 어떻게 보낼 지 고민해봐야한다.)
-            for (TodoItem todo : todoList) {
+            for (Todo todo : todoList) {
                 addTodoItemFragment(todo);
             }
         });
     }
 
-    public void addTodoItemFragment(TodoItem todo){
+    /**
+     * todoData를 기반으로 TodoItemFragment를 추가한다.
+     * */
+    public void addTodoItemFragment(Todo todo){
         int todoId = ++todoCounter;
         TodoItemFragment todoItemFragment = TodoItemFragment.newInstance(todo);
 

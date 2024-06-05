@@ -1,22 +1,22 @@
-package com.example.mvvm_android.ui.viewModels;
+package com.example.mvvm_android.todoList.ui.viewModels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mvvm_android.domain.model.TodoItem;
-import com.example.mvvm_android.domain.usecase.AddTodoUseCase;
-import com.example.mvvm_android.domain.usecase.ClearAllTodoUseCase;
-import com.example.mvvm_android.domain.usecase.GetAllTodoUseCase;
+import com.example.mvvm_android.todoList.domain.models.Todo;
+import com.example.mvvm_android.todoList.domain.usecases.AddTodoUseCase;
+import com.example.mvvm_android.todoList.domain.usecases.ClearAllTodoUseCase;
+import com.example.mvvm_android.todoList.domain.usecases.GetAllTodoUseCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TodoListViewModel extends ViewModel {
 
-    private final MutableLiveData<List<TodoItem>> todoList = new MutableLiveData<>();
+    private final MutableLiveData<List<Todo>> todoList = new MutableLiveData<>();
 
-    public LiveData<List<TodoItem>> getTodoList() {
+    public LiveData<List<Todo>> getTodoList() {
         return todoList;
     }
 
