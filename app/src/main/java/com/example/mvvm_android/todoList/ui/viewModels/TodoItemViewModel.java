@@ -24,7 +24,7 @@ public class TodoItemViewModel extends ViewModel {
     }
     public LiveData<Void> getStartTodoDetailActivity(){ return startTodoDetailActivity; }
 
-    private UpdateTodoStatusUseCase updateTodoStatusUseCase;
+    private final UpdateTodoStatusUseCase updateTodoStatusUseCase;
 
     public TodoItemViewModel(){
         this.updateTodoStatusUseCase = new UpdateTodoStatusUseCase();
@@ -43,7 +43,7 @@ public class TodoItemViewModel extends ViewModel {
     public void onDoneClicked(){
 
         this.completed.setValue(Boolean.FALSE.equals(this.completed.getValue()));
-        updateTodoStatusUseCase.execute(getCreatedAt().getValue(), isChecked().getValue());
+        updateTodoStatusUseCase.execute(getCreatedAt().getValue(), Boolean.TRUE.equals(isChecked().getValue()));
     }
 
     public void startTodoDetailActivity(){

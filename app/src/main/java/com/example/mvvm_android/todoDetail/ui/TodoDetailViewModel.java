@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class TodoDetailViewModel extends ViewModel {
-    private MutableLiveData<String> content = new MutableLiveData<>("this is dummy");
+    private final MutableLiveData<String> content = new MutableLiveData<>("this is dummy");
 
     public LiveData<String> getContent() {
         return content;
