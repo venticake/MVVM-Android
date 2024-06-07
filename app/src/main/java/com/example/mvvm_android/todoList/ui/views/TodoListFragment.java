@@ -1,6 +1,7 @@
 package com.example.mvvm_android.todoList.ui.views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,16 +49,26 @@ public class TodoListFragment extends Fragment {
         // LifecyleOwner에 fragment 대신 Fragment's view lifecycle 사용
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
-        // todoList가 update될 때마다 TodoItemFragment를 추가
-        // 지금 상태는 다 지우고 새로 업데이트 한다 -> 매우 비효율적
-        // Todo : 하나씩 업데이트 할 수 있도록 해보기
         todoListViewModel.getTodoList().observe(getViewLifecycleOwner(), todoList -> {
-            // clear fragment
-            getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            // Todo : 현재는 더미데이터를 기반으로 같은 내용의 TodoItemFragment를 만들고 있다. id를 기반으로 Usecase를
-            //  거쳐 Realm에서 데이터를 가져올지, 단순하게 Fragment의 매개변수로 값을 처리할 지 고민해보자. (이 경우에 Fragment -> ViewModel로 값을 어떻게 보낼 지 고민해봐야한다.)
-            for (Todo todo : todoList) {
-                addTodoItemFragment(todo);
+            if(todoCounter == 0){
+                getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                if(!todoList.isEmpty()){
+                    for (Todo todo : todoList) {
+                        addTodoItemFragment(todo);
+                    }
+                    Log.d("todoCounter", "total Todo added");
+                }
+            }else{
+                if(todoList.isEmpty()){
+                    todoCounter = 0;
+                    getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    Log.d("todoCounter", "todo cleared");
+                }else{
+                    addTodoItemFragment(todoList.get(todoList.size()-1));
+                    Log.d("todoCounter", "new Todo added " + todoList.size());
+                }
+
+
             }
         });
     }

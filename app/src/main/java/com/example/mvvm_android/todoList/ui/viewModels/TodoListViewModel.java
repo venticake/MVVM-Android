@@ -36,8 +36,6 @@ public class TodoListViewModel extends ViewModel {
 
     public void addTodoItem(){
         useCaseAddTodo.execute();
-        // 되게 비효율적으로 보인다.
-        // Todo: 하나씩 업데이트 되게 수정하기.
         todoList.setValue(useCaseGetAllTodo.execute());
     }
 
