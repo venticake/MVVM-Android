@@ -1,6 +1,8 @@
-package com.example.mvvm_android.todoList.data.repository;
+package com.example.mvvm_android.todoCore.data.repository;
 
-import com.example.mvvm_android.todoList.data.local.TodoRecord;
+import com.example.mvvm_android.todoCore.data.local.TodoRecord;
+
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -14,10 +16,10 @@ public class TodoRepository {
 
     public void addTodo(final String content){
         this.realm.executeTransaction(realm -> {
-            TodoRecord todoRecord = realm.createObject(TodoRecord.class, System.currentTimeMillis());
+            TodoRecord todoRecord = realm.createObject(TodoRecord.class);
             todoRecord.setContent(content);
             todoRecord.setCompleted(false);
-            todoRecord.setDatetime(String.valueOf(System.currentTimeMillis()));
+            todoRecord.setDatetime(new Date(System.currentTimeMillis()).toString());
         });
     }
 
@@ -35,5 +37,9 @@ public class TodoRepository {
             assert todoRecord != null;
             todoRecord.setCompleted(completed);
         });
+    }
+
+    public TodoRecord findTodoById(long id){
+        return realm.where(TodoRecord.class).equalTo("id", id).findFirst();
     }
 }

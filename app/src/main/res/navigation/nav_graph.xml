@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/todoListFragment">
+
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.example.mvvm_android.todoList.ui.TodoListFragment"
+        android:label="TodoListFragment"
+        tools:layout="@layout/fragment_todo_list" >
+        <action
+            android:id="@+id/action_todoListFragment_to_todoDetailFragment"
+            app:destination="@id/todoDetailFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/todoDetailFragment"
+        android:name="com.example.mvvm_android.todoDetail.ui.TodoDetailFragment"
+        android:label="todoDetailFragment"
+        tools:layout= "@layout/fragment_todo_detail">
+        <action
+            android:id="@+id/action_todoDetailFragment_to_todoListFragment"
+            app:destination="@id/todoListFragment"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/memoFragment"
+        android:name="com.example.mvvm_android.memo.ui.view.MemoFragment"
+        android:label="MemoFragment"
+        tools:layout="@layout/fragment_memo">
+        <action
+            android:id="@+id/action_memoFragment_to_memoSafeArgsFragment"
+            app:destination="@id/memoSafeArgsFragment" />
+        <action
+            android:id="@+id/action_memoFragment_to_memoBundleFragment"
+            app:destination="@id/memoBundleFragment" />
+        <action
+            android:id="@+id/action_memoFragment_to_memoVMFragment"
+            app:destination="@id/memoVMFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/basicTextActivity"
+        android:name="com.example.mvvm_android.basicText.ui.BasicTextActivity"
+        android:label="activity_basic_text"
+        tools:layout="@layout/activity_basic_text" />
+    <fragment
+        android:id="@+id/memoBundleFragment"
+        android:name="com.example.mvvm_android.memo.ui.view.MemoBundleFragment"
+        android:label="fragment_memo_bundle"
+        tools:layout="@layout/fragment_memo_bundle" />
+    <fragment
+        android:id="@+id/memoSafeArgsFragment"
+        android:name="com.example.mvvm_android.memo.ui.view.MemoSafeArgsFragment"
+        android:label="fragment_memo_safe_args"
+        tools:layout="@layout/fragment_memo_safe_args" >
+        <argument
+            android:name="content"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/memoVMFragment"
+        android:name="com.example.mvvm_android.memo.ui.view.MemoVMFragment"
+        android:label="fragment_memo_v_m"
+        tools:layout="@layout/fragment_memo_v_m" />
+
+
+</navigation>

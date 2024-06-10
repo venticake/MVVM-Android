@@ -1,10 +1,10 @@
-package com.example.mvvm_android.todoList.ui.viewModels;
+package com.example.mvvm_android.todoList.ui;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mvvm_android.todoList.domain.models.Todo;
+import com.example.mvvm_android.todoCore.domain.models.Todo;
 import com.example.mvvm_android.todoList.domain.usecases.AddTodoUseCase;
 import com.example.mvvm_android.todoList.domain.usecases.ClearAllTodoUseCase;
 import com.example.mvvm_android.todoList.domain.usecases.GetAllTodoUseCase;

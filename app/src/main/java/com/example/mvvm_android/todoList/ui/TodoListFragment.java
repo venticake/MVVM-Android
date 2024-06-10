@@ -1,11 +1,13 @@
-package com.example.mvvm_android.todoList.ui.views;
+package com.example.mvvm_android.todoList.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -15,9 +17,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mvvm_android.R;
-import com.example.mvvm_android.todoList.ui.viewModels.TodoListViewModel;
+import com.example.mvvm_android.todoItem.ui.TodoItemFragment;
 import com.example.mvvm_android.databinding.FragmentTodoListBinding;
-import com.example.mvvm_android.todoList.domain.models.Todo;
+import com.example.mvvm_android.todoCore.domain.models.Todo;
 
 public class TodoListFragment extends Fragment {
     private TodoListViewModel todoListViewModel;
@@ -30,6 +32,17 @@ public class TodoListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        requireActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("onBackPressed", "onBackPressed");
+            }
+        });
     }
 
     @Override
@@ -50,6 +63,7 @@ public class TodoListFragment extends Fragment {
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         todoListViewModel.getTodoList().observe(getViewLifecycleOwner(), todoList -> {
+            // todoCounter가 0인 경우: 아무것도 추가되지 않음 -> 전체 만듬
             if(todoCounter == 0){
                 getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 if(!todoList.isEmpty()){
@@ -60,15 +74,15 @@ public class TodoListFragment extends Fragment {
                 }
             }else{
                 if(todoList.isEmpty()){
+                    // todoCounter가 0이 아니며, todoList의 크기가 0일 경우 : 투두 클러이 -> 전체 삭제
                     todoCounter = 0;
                     getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     Log.d("todoCounter", "todo cleared");
-                }else{
+                }else if(todoList.size() > todoCounter){
+                    // todoCounter가 0이 아니며, todoList의 크기가 todo보다 클 경우 : 하나 추가됨 -> 마지막 하나 추가
                     addTodoItemFragment(todoList.get(todoList.size()-1));
                     Log.d("todoCounter", "new Todo added " + todoList.size());
                 }
-
-
             }
         });
     }
@@ -78,7 +92,7 @@ public class TodoListFragment extends Fragment {
      * */
     public void addTodoItemFragment(Todo todo){
         int todoId = ++todoCounter;
-        TodoItemFragment todoItemFragment = TodoItemFragment.newInstance(todo);
+        TodoItemFragment todoItemFragment = TodoItemFragment.newInstance(todo.getId());
 
         String fragmentTag = "todoItemFragment" + todoId;
 

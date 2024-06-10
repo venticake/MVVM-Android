@@ -1,6 +1,6 @@
 package com.example.mvvm_android.todoList.domain.usecases;
 
-import com.example.mvvm_android.todoList.data.repository.TodoRepository;
+import com.example.mvvm_android.todoCore.data.repository.TodoRepository;
 
 import java.util.Random;
 

@@ -1,10 +1,12 @@
-package com.example.mvvm_android.todoList.ui.viewModels;
+package com.example.mvvm_android.todoItem.ui;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mvvm_android.todoList.domain.usecases.UpdateTodoStatusUseCase;
+import com.example.mvvm_android.todoDetail.domain.usecases.FindTodoByIdUsecase;
+import com.example.mvvm_android.todoCore.domain.models.Todo;
+import com.example.mvvm_android.todoItem.domain.usecases.UpdateTodoStatusUseCase;
 import com.example.mvvm_android.util.SingleLiveEvent;
 
 public class TodoItemViewModel extends ViewModel {
@@ -13,6 +15,8 @@ public class TodoItemViewModel extends ViewModel {
     private final MutableLiveData<String> createdAt = new MutableLiveData<>("This is time");
 
     private final SingleLiveEvent<Void> startTodoDetailActivity = new SingleLiveEvent<>();
+
+
 
 
     public LiveData<String> getContent(){
@@ -25,15 +29,20 @@ public class TodoItemViewModel extends ViewModel {
     public LiveData<Void> getStartTodoDetailActivity(){ return startTodoDetailActivity; }
 
     private final UpdateTodoStatusUseCase updateTodoStatusUseCase;
+    private final FindTodoByIdUsecase findTodoByIdUsecase;
 
     public TodoItemViewModel(){
         this.updateTodoStatusUseCase = new UpdateTodoStatusUseCase();
+        findTodoByIdUsecase = new FindTodoByIdUsecase();
     }
 
-    public void setTodoItem(String content, String createdAt, Boolean completed){
-        this.content.setValue(content);
-        this.createdAt.setValue(createdAt);
-        this.completed.setValue(completed);
+    public void setTodoItem(Long id){
+        Todo todo = findTodoByIdUsecase.execute(id);
+
+
+        this.content.setValue(todo.getContent());
+        this.createdAt.setValue(todo.getCreatedAt());
+        this.completed.setValue(todo.isCompleted());
     }
 
     /**

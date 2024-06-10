@@ -5,4 +5,12 @@
     <string name="add_todo">add todo</string>
     <string name="clear_all_todo">clear all todo</string>
     <string name="done">Done</string>
+    <string name="loremipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vehicula id ligula ac viverra. Nullam sit amet cursus purus, ac aliquam orci. Aenean nec sagittis felis. Morbi suscipit tellus eget tincidunt fringilla. Quisque semper viverra arcu eu pharetra. Sed id ipsum porta, vestibulum tellus eget, pretium risus. Aliquam tincidunt vitae est ut venenatis. Praesent eu magna porttitor, imperdiet arcu a, lobortis mauris. Duis dignissim quis velit id aliquet. Fusce feugiat eleifend felis, nec mollis nunc congue nec. Maecenas elementum, augue eu mollis lobortis, justo ligula suscipit risus, non faucibus nisi ante sit amet lorem. Nullam porttitor euismod leo ut dictum. Cras quis rhoncus justo, vitae ultrices augue. Duis sollicitudin vulputate maximus.</string>
+    <string name="back_to_list">back to list</string>
+    <string name="bottomNavTodolist">todoList</string>
+    <string name="bottomNavMemo">memo</string>
+    <string name="bottomNavBasicText">basicText</string>
+    <string name="send_data_via_safeargs">send data via SafeArgs</string>
+    <string name="send_data_via_viewmodel">send data via ViewModel</string>
+    <string name="send_data_via_bundle">send data via Bundle</string>
 </resources>

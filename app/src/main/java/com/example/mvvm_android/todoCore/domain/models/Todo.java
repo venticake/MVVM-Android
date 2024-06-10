@@ -1,14 +1,17 @@
-package com.example.mvvm_android.todoList.data.local;
+package com.example.mvvm_android.todoCore.domain.models;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
-public class TodoRecord extends RealmObject {
-    @PrimaryKey
+public class Todo {
     private long id;
     private String content;
-    private String datetime;
     private boolean completed;
+    private String createdAt;
+
+    public Todo(long id, String content, boolean completed, String createdAt) {
+        this.id = id;
+        this.content = content;
+        this.completed = completed;
+        this.createdAt = createdAt;
+    }
 
     public long getId() {
         return id;
@@ -26,19 +29,19 @@ public class TodoRecord extends RealmObject {
         this.content = content;
     }
 
-    public String getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
-    }
-
     public boolean isCompleted() {
         return completed;
     }
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

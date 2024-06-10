@@ -1,6 +1,5 @@
-package com.example.mvvm_android.todoList.ui.views;
+package com.example.mvvm_android.todoItem.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.example.mvvm_android.R;
-import com.example.mvvm_android.todoDetail.ui.TodoDetailActivity;
-import com.example.mvvm_android.todoList.ui.viewModels.TodoItemViewModel;
 import com.example.mvvm_android.databinding.FragmentTodoItemBinding;
-import com.example.mvvm_android.todoList.domain.models.Todo;
+import com.example.mvvm_android.todoList.ui.TodoListFragmentDirections;
 
 public class TodoItemFragment extends Fragment {
     private TodoItemViewModel todoItemViewModel;
@@ -26,13 +26,11 @@ public class TodoItemFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TodoItemFragment newInstance(Todo todo) {
+    public static TodoItemFragment newInstance(Long id) {
         TodoItemFragment fragment = new TodoItemFragment();
         Bundle args = new Bundle();
         // 이걸 나눠서 담아..?
-        args.putString("content", todo.getContent());
-        args.putString("createdAt", todo.getCreatedAt());
-        args.putBoolean("completed", todo.isCompleted());
+        args.putLong("id", id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,18 +59,18 @@ public class TodoItemFragment extends Fragment {
 
         // 이게 onCreated가 아니라 onViewCreated에 있어도 괜찮은가?
         if (getArguments() != null) {
-            String content = getArguments().getString("content");
-            String createdAt = getArguments().getString("createdAt");
-            boolean completed = getArguments().getBoolean("completed");
+            Long id = getArguments().getLong("id");
 
-            todoItemViewModel.setTodoItem(content, createdAt, completed);
+            todoItemViewModel.setTodoItem(id);
         }
 
         // viewModel의 startTodoDetailActivity observe
         todoItemViewModel.getStartTodoDetailActivity().observe(getViewLifecycleOwner(), unused -> {
-            Intent intent = new Intent(getActivity(), TodoDetailActivity.class);
-            intent.putExtra("content", todoItemViewModel.getContent().getValue());
-            startActivity(intent);
+            NavController navController = Navigation.findNavController(view);
+
+            NavDirections action = TodoListFragmentDirections.actionTodoListFragmentToTodoDetailFragment(getArguments().getLong("id"));
+
+            navController.navigate(action);
         });
     }
 }

@@ -1,8 +1,8 @@
 package com.example.mvvm_android.todoList.domain.usecases;
 
-import com.example.mvvm_android.todoList.data.local.TodoRecord;
-import com.example.mvvm_android.todoList.data.repository.TodoRepository;
-import com.example.mvvm_android.todoList.domain.models.Todo;
+import com.example.mvvm_android.todoCore.data.local.TodoRecord;
+import com.example.mvvm_android.todoCore.data.repository.TodoRepository;
+import com.example.mvvm_android.todoCore.domain.models.Todo;
 
 import java.util.ArrayList;
 import java.util.List;
