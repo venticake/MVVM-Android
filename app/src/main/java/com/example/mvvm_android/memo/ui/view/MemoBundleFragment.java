@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +17,24 @@ import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoBundleBinding;
 import com.example.mvvm_android.memo.ui.viewModel.MemoBundleViewModel;
 
+import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
+
 public class MemoBundleFragment extends Fragment {
     MemoBundleViewModel memoBundleViewModel;
     FragmentMemoBundleBinding binding;
+
+    Disposable disposable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_memo_bundle, container, false);
         // Inflate the layout for this fragment
+
         return binding.getRoot();
     }
 
@@ -40,5 +50,18 @@ public class MemoBundleFragment extends Fragment {
         String content = getArguments().getString("content");
 
         memoBundleViewModel.setContent(content);
+
+        disposable = memoBundleViewModel.getBackButton()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                aObject -> Navigation.findNavController(requireView()).popBackStack(),
+                Throwable::printStackTrace
+        );
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.dispose();
     }
 }

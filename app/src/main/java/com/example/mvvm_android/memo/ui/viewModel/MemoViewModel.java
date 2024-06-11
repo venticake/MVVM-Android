@@ -1,37 +1,52 @@
 package com.example.mvvm_android.memo.ui.viewModel;
 
+import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mvvm_android.util.SingleLiveEvent;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+
 public class MemoViewModel extends ViewModel {
-    private final MutableLiveData<String> content = new MutableLiveData<>("dummy Text");
+    private final ObservableField<String> _content = new ObservableField<>("RxJava Dummy");
 
-    private final MutableLiveData<String> moveEventLabel = new SingleLiveEvent<>();
+    private final PublishSubject<String> _moveEventLabel = PublishSubject.create();
 
-    public LiveData<String> getMoveEventLabel(){
-        return moveEventLabel;
+    private final PublishSubject<Object> _backButton = PublishSubject.create();
+
+    public Observable<String> getMoveEventLabel() {
+        return _moveEventLabel;
     }
 
-    public LiveData<String> getContent(){
-        return content;
+    public ObservableField<String> getContent() {
+        return _content;
     }
 
-    public void onTextChanged(CharSequence text){
-        content.setValue(text.toString());
+    public Observable<Object> getBackButton() {
+        return _backButton;
     }
 
-    public void move_SafeArgs(){
-        moveEventLabel.setValue("SafeArgs");
+    public void onTextChangedRx(CharSequence text) {
+        _content.set(text.toString());
     }
 
-    public void move_Bundle(){
-        moveEventLabel.setValue("Bundle");
+    public void move_SafeArgs() {
+        _moveEventLabel.onNext("SafeArgs");
     }
 
-    public void move_ViewModel(){
-        moveEventLabel.setValue("ViewModel");
+    public void move_Bundle() {
+        _moveEventLabel.onNext("Bundle");
+    }
+
+    public void move_ViewModel() {
+        _moveEventLabel.onNext("ViewModel");
+    }
+
+    public void setBackButton(){
+        _backButton.onNext(new Object());
     }
 }

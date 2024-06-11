@@ -1,6 +1,7 @@
 package com.example.mvvm_android.memo.ui.view;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +24,15 @@ import com.example.mvvm_android.memo.ui.viewModel.MemoViewModel;
 
 import java.util.Objects;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public class MemoFragment extends Fragment {
 
     private MemoViewModel memoViewModel;
     private FragmentMemoBinding binding;
+
+    private Disposable disposable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,25 +49,34 @@ public class MemoFragment extends Fragment {
         binding.setViewModel(memoViewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
-        memoViewModel.getContent().observe(getViewLifecycleOwner(), content -> binding.memoTextView.setText(content));
+        disposable = memoViewModel.getMoveEventLabel().observeOn(AndroidSchedulers.mainThread()).subscribe(
+                label -> {
+                    NavController navController = Navigation.findNavController(requireView());
+                    switch (label){
+                        case "SafeArgs":
+                            NavDirections action =
+                                    MemoFragmentDirections.actionMemoFragmentToMemoSafeArgsFragment(memoViewModel.getContent().get());
+                            navController.navigate(action);
+                            break;
+                        case "Bundle":
+                            Bundle bundle = new Bundle();
+                            bundle.putString("content", memoViewModel.getContent().get());
+                            navController.navigate(R.id.action_memoFragment_to_memoBundleFragment, bundle);
+                            break;
+                        case "ViewModel":
+                            navController.navigate(R.id.memoVMFragment);
+                            break;
+                    }
+                },
+                error -> {
+                     Log.e("MemoFragment", Objects.requireNonNull(error.getMessage()));
+                }
+        );
+    }
 
-        memoViewModel.getMoveEventLabel().observe(getViewLifecycleOwner(), label -> {
-            NavController navController = Navigation.findNavController(requireView());
-            switch (label){
-                case "SafeArgs":
-                    NavDirections action =
-                            MemoFragmentDirections.actionMemoFragmentToMemoSafeArgsFragment(memoViewModel.getContent().getValue());
-                    navController.navigate(action);
-                    break;
-                case "Bundle":
-                    Bundle bundle = new Bundle();
-                    bundle.putString("content", memoViewModel.getContent().getValue());
-                    navController.navigate(R.id.action_memoFragment_to_memoBundleFragment, bundle);
-                    break;
-                case "ViewModel":
-                    navController.navigate(R.id.memoVMFragment);
-                    break;
-            }
-        });
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.dispose();
     }
 }

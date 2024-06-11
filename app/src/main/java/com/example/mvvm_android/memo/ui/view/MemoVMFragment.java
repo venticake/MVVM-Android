@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,14 @@ import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoVMBinding;
 import com.example.mvvm_android.memo.ui.viewModel.MemoViewModel;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public class MemoVMFragment extends Fragment {
     MemoViewModel memoViewModel;
     FragmentMemoVMBinding binding;
+
+    private Disposable disposable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -34,5 +40,10 @@ public class MemoVMFragment extends Fragment {
         memoViewModel = new ViewModelProvider(requireActivity()).get(MemoViewModel.class);
         binding.setViewModel(memoViewModel);
         binding.setLifecycleOwner(this);
+
+        disposable = memoViewModel.getBackButton().observeOn(AndroidSchedulers.mainThread()).subscribe(
+                aObject -> Navigation.findNavController(requireView()).popBackStack(),
+                Throwable::printStackTrace
+        );
     }
 }
