@@ -1,7 +1,6 @@
 package com.example.mvvm_android.memo.ui.view;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.Observable;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -68,9 +67,7 @@ public class MemoFragment extends Fragment {
                             break;
                     }
                 },
-                error -> {
-                     Log.e("MemoFragment", Objects.requireNonNull(error.getMessage()));
-                }
+                error -> Log.e("MemoFragment", Objects.requireNonNull(error.getMessage()))
         );
     }
 

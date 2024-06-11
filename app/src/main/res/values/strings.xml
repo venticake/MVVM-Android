@@ -13,4 +13,5 @@
     <string name="send_data_via_safeargs">send data via SafeArgs</string>
     <string name="send_data_via_viewmodel">send data via ViewModel</string>
     <string name="send_data_via_bundle">send data via Bundle</string>
+    <string name="back_to_memo">back to memo</string>
 </resources>

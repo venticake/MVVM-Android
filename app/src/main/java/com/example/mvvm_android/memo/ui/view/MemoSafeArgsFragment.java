@@ -44,11 +44,14 @@ public class MemoSafeArgsFragment extends Fragment {
         memoSafeArgsViewModel.setContent(content);
 
         disposable = memoSafeArgsViewModel.getBackButton().observeOn(AndroidSchedulers.mainThread()).subscribe(
-                aObject -> {
-                    Navigation.findNavController(requireView()).popBackStack();
-                },
+                aObject -> Navigation.findNavController(requireView()).popBackStack(),
                 Throwable::printStackTrace
         );
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.dispose();
+    }
 }

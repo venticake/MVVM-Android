@@ -17,11 +17,8 @@ import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoBundleBinding;
 import com.example.mvvm_android.memo.ui.viewModel.MemoBundleViewModel;
 
-import java.util.Objects;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
 
 public class MemoBundleFragment extends Fragment {
     MemoBundleViewModel memoBundleViewModel;

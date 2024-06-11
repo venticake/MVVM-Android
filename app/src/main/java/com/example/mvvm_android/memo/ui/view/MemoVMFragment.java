@@ -46,4 +46,10 @@ public class MemoVMFragment extends Fragment {
                 Throwable::printStackTrace
         );
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.dispose();
+    }
 }
