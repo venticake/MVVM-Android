@@ -1,8 +1,8 @@
-package com.example.mvvm_android.todoDetail.domain.usecases;
+package com.example.mvvm_android.todoDetail.domain.usecase;
 
 import com.example.mvvm_android.todoCore.data.local.TodoRecord;
 import com.example.mvvm_android.todoCore.data.repository.TodoRepository;
-import com.example.mvvm_android.todoCore.domain.models.Todo;
+import com.example.mvvm_android.todoCore.domain.model.Todo;
 
 public class FindTodoByIdUsecase {
     TodoRepository todoRepository;

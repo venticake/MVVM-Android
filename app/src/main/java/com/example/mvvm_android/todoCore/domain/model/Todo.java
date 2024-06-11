@@ -1,4 +1,4 @@
-package com.example.mvvm_android.todoCore.domain.models;
+package com.example.mvvm_android.todoCore.domain.model;
 
 public class Todo {
     private long id;

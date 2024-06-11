@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.todoItem.ui.TodoItemFragment;
 import com.example.mvvm_android.databinding.FragmentTodoListBinding;
-import com.example.mvvm_android.todoCore.domain.models.Todo;
+import com.example.mvvm_android.todoCore.domain.model.Todo;
 
 public class TodoListFragment extends Fragment {
     private TodoListViewModel todoListViewModel;

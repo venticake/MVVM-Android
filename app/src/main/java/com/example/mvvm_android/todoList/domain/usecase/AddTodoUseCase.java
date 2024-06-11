@@ -1,4 +1,4 @@
-package com.example.mvvm_android.todoList.domain.usecases;
+package com.example.mvvm_android.todoList.domain.usecase;
 
 import com.example.mvvm_android.todoCore.data.repository.TodoRepository;
 

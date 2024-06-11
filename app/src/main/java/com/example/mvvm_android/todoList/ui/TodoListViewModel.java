@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mvvm_android.todoCore.domain.models.Todo;
-import com.example.mvvm_android.todoList.domain.usecases.AddTodoUseCase;
-import com.example.mvvm_android.todoList.domain.usecases.ClearAllTodoUseCase;
-import com.example.mvvm_android.todoList.domain.usecases.GetAllTodoUseCase;
+import com.example.mvvm_android.todoCore.domain.model.Todo;
+import com.example.mvvm_android.todoList.domain.usecase.AddTodoUseCase;
+import com.example.mvvm_android.todoList.domain.usecase.ClearAllTodoUseCase;
+import com.example.mvvm_android.todoList.domain.usecase.GetAllTodoUseCase;
 
 import java.util.ArrayList;
 import java.util.List;

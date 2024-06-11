@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mvvm_android.todoDetail.domain.usecases.FindTodoByIdUsecase;
-import com.example.mvvm_android.todoCore.domain.models.Todo;
+import com.example.mvvm_android.todoDetail.domain.usecase.FindTodoByIdUsecase;
+import com.example.mvvm_android.todoCore.domain.model.Todo;
 import com.example.mvvm_android.util.SingleLiveEvent;
 
 public class TodoDetailViewModel extends ViewModel {

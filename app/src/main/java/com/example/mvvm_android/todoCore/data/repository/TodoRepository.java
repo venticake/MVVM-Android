@@ -16,7 +16,7 @@ public class TodoRepository {
 
     public void addTodo(final String content){
         this.realm.executeTransaction(realm -> {
-            TodoRecord todoRecord = realm.createObject(TodoRecord.class);
+            TodoRecord todoRecord = realm.createObject(TodoRecord.class, System.currentTimeMillis());
             todoRecord.setContent(content);
             todoRecord.setCompleted(false);
             todoRecord.setDatetime(new Date(System.currentTimeMillis()).toString());
