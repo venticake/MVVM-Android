@@ -5,12 +5,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mvvm_android.todoCore.domain.model.Todo;
-import com.example.mvvm_android.todoList.domain.usecase.AddTodoUseCase;
-import com.example.mvvm_android.todoList.domain.usecase.ClearAllTodoUseCase;
-import com.example.mvvm_android.todoList.domain.usecase.GetAllTodoUseCase;
+import com.example.mvvm_android.todoList.domain.usecase.AddTodoAsyncUseCase;
+import com.example.mvvm_android.todoList.domain.usecase.ClearAllTodosAsyncUseCase;
+import com.example.mvvm_android.todoList.domain.usecase.GetAllTodoAsyncUseCase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class TodoListViewModel extends ViewModel {
 
@@ -20,27 +24,50 @@ public class TodoListViewModel extends ViewModel {
         return todoList;
     }
 
-    AddTodoUseCase useCaseAddTodo;
-    GetAllTodoUseCase useCaseGetAllTodo;
-    ClearAllTodoUseCase useCaseClearAllTodo;
+    private Disposable getAllTodoDisposable;
+    private Disposable addTodoDisposable;
+
+    AddTodoAsyncUseCase useCaseAddTodo;
+    GetAllTodoAsyncUseCase useCaseGetAllTodo;
+    ClearAllTodosAsyncUseCase useCaseClearAllTodo;
 
     public TodoListViewModel() {
-        useCaseAddTodo = new AddTodoUseCase();
-        useCaseGetAllTodo = new GetAllTodoUseCase();
-        useCaseClearAllTodo = new ClearAllTodoUseCase();
+        useCaseAddTodo = new AddTodoAsyncUseCase();
+        useCaseGetAllTodo = new GetAllTodoAsyncUseCase();
+        useCaseClearAllTodo = new ClearAllTodosAsyncUseCase();
 
-        todoList.setValue(useCaseGetAllTodo.execute());
+        fetchTodos();
     }
 
-
-
-    public void addTodoItem(){
-        useCaseAddTodo.execute();
-        todoList.setValue(useCaseGetAllTodo.execute());
+    public void fetchTodos() {
+        getAllTodoDisposable = useCaseGetAllTodo.execute()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        todoList::setValue,
+                        Throwable::printStackTrace
+                );
     }
 
-    public void clearTodoList(){
+    public void addTodoItem() {
+        addTodoDisposable = useCaseAddTodo.execute()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        this::fetchTodos,
+                        Throwable::printStackTrace
+                );
+    }
+
+    public void clearTodoList() {
         useCaseClearAllTodo.execute();
         todoList.setValue(new ArrayList<>());
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        getAllTodoDisposable.dispose();
+        addTodoDisposable.dispose();
     }
 }

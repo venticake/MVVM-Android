@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/memoFragment"
-        android:name="com.example.mvvm_android.memo.ui.view.MemoFragment"
+        android:name="com.example.mvvm_android.memoEditor.MemoEditorFragment"
         android:label="MemoFragment"
         tools:layout="@layout/fragment_memo">
         <action
@@ -47,17 +47,17 @@
     </fragment>
     <activity
         android:id="@+id/basicTextActivity"
-        android:name="com.example.mvvm_android.basicText.ui.BasicTextActivity"
+        android:name="com.example.mvvm_android.basicText.BasicTextActivity"
         android:label="activity_basic_text"
         tools:layout="@layout/activity_basic_text" />
     <fragment
         android:id="@+id/memoBundleFragment"
-        android:name="com.example.mvvm_android.memo.ui.view.MemoBundleFragment"
+        android:name="com.example.mvvm_android.memoItem.view.MemoBundleFragment"
         android:label="fragment_memo_bundle"
         tools:layout="@layout/fragment_memo_bundle" />
     <fragment
         android:id="@+id/memoSafeArgsFragment"
-        android:name="com.example.mvvm_android.memo.ui.view.MemoSafeArgsFragment"
+        android:name="com.example.mvvm_android.memoItem.view.MemoSafeArgsFragment"
         android:label="fragment_memo_safe_args"
         tools:layout="@layout/fragment_memo_safe_args" >
         <argument
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/memoVMFragment"
-        android:name="com.example.mvvm_android.memo.ui.view.MemoVMFragment"
+        android:name="com.example.mvvm_android.memoItem.view.MemoVMFragment"
         android:label="fragment_memo_v_m"
         tools:layout="@layout/fragment_memo_v_m" />
 

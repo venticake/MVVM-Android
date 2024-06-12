@@ -1,4 +1,4 @@
-package com.example.mvvm_android.memo.ui.view;
+package com.example.mvvm_android.memoItem.view;
 
 import android.os.Bundle;
 
@@ -15,13 +15,13 @@ import android.view.ViewGroup;
 
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoVMBinding;
-import com.example.mvvm_android.memo.ui.viewModel.MemoViewModel;
+import com.example.mvvm_android.memoEditor.MemoEditorViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 public class MemoVMFragment extends Fragment {
-    MemoViewModel memoViewModel;
+    MemoEditorViewModel memoEditorViewModel;
     FragmentMemoVMBinding binding;
 
     private Disposable disposable;
@@ -37,11 +37,11 @@ public class MemoVMFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        memoViewModel = new ViewModelProvider(requireActivity()).get(MemoViewModel.class);
-        binding.setViewModel(memoViewModel);
+        memoEditorViewModel = new ViewModelProvider(requireActivity()).get(MemoEditorViewModel.class);
+        binding.setViewModel(memoEditorViewModel);
         binding.setLifecycleOwner(this);
 
-        disposable = memoViewModel.getBackButton().observeOn(AndroidSchedulers.mainThread()).subscribe(
+        disposable = memoEditorViewModel.getBackButton().observeOn(AndroidSchedulers.mainThread()).subscribe(
                 aObject -> Navigation.findNavController(requireView()).popBackStack(),
                 Throwable::printStackTrace
         );

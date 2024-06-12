@@ -62,6 +62,10 @@ public class TodoListFragment extends Fragment {
         // LifecyleOwner에 fragment 대신 Fragment's view lifecycle 사용
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
+        observeEvent();
+    }
+
+    private void observeEvent() {
         todoListViewModel.getTodoList().observe(getViewLifecycleOwner(), todoList -> {
             // todoCounter가 0인 경우: 아무것도 추가되지 않음 -> 전체 만듬
             if(todoCounter == 0){
