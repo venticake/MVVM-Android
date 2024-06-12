@@ -122,14 +122,14 @@ public class TodoRepository {
             handler.post(() -> {
                 Realm.getInstanceAsync(getDefaultConfiguration(), new Realm.Callback() {
                     @Override
-                    public void onSuccess(Realm realm) {
+                    public void onSuccess(@NonNull Realm realm) {
                         TodoRecord todoRecord = realm.where(TodoRecord.class).equalTo("id", id).findFirst();
 
                         emitter.onSuccess(todoRecord);
                     }
 
                     @Override
-                    public void onError(Throwable exception) {
+                    public void onError(@NonNull Throwable exception) {
                         super.onError(exception);
                         Log.e("Realm", Objects.requireNonNull(exception.getMessage()));
                         emitter.onError(exception);
