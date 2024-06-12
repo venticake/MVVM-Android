@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.mvvm_android.memo.ui.viewModel.MemoSafeArgsViewModel" />
+            type="com.example.mvvm_android.memoItem.viewModel.MemoSafeArgsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".memo.ui.view.MemoSafeArgsFragment">
+        tools:context=".memoItem.view.MemoSafeArgsFragment">
 
         <TextView
             android:id="@+id/textView6"

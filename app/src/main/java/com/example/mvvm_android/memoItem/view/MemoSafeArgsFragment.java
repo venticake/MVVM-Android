@@ -1,4 +1,4 @@
-package com.example.mvvm_android.memo.ui.view;
+package com.example.mvvm_android.memoItem.view;
 
 import android.os.Bundle;
 
@@ -14,7 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoSafeArgsBinding;
-import com.example.mvvm_android.memo.ui.viewModel.MemoSafeArgsViewModel;
+import com.example.mvvm_android.memoItem.view.MemoSafeArgsFragmentArgs;
+import com.example.mvvm_android.memoItem.viewModel.MemoSafeArgsViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;

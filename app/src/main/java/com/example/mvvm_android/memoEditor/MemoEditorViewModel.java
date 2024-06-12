@@ -1,4 +1,4 @@
-package com.example.mvvm_android.memo.ui.viewModel;
+package com.example.mvvm_android.memoEditor;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class MemoViewModel extends ViewModel {
+public class MemoEditorViewModel extends ViewModel {
     private final ObservableField<String> _content = new ObservableField<>("RxJava Dummy");
 
     private final PublishSubject<String> _moveEventLabel = PublishSubject.create();

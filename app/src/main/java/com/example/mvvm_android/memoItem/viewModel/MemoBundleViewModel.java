@@ -1,4 +1,4 @@
-package com.example.mvvm_android.memo.ui.viewModel;
+package com.example.mvvm_android.memoItem.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
