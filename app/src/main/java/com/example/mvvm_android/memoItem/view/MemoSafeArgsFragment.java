@@ -16,14 +16,13 @@ import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoSafeArgsBinding;
 import com.example.mvvm_android.memoItem.viewModel.MemoSafeArgsViewModel;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
-
+/**
+ * MemoEditorFragment에서 작성한 내용을 표현하는 fragment
+ * Navigation을 통한 이동 시 데이터를 SafeArgs로 생성된 메서드에 담아 전송.
+ */
 public class MemoSafeArgsFragment extends Fragment {
     MemoSafeArgsViewModel memoSafeArgsViewModel;
     FragmentMemoSafeArgsBinding binding;
-
-    private Disposable disposable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,15 +42,17 @@ public class MemoSafeArgsFragment extends Fragment {
         String content = MemoSafeArgsFragmentArgs.fromBundle(this.getArguments()).getContent();
         memoSafeArgsViewModel.setContent(content);
 
-        disposable = memoSafeArgsViewModel.getBackButton().observeOn(AndroidSchedulers.mainThread()).subscribe(
-                aObject -> Navigation.findNavController(requireView()).popBackStack(),
-                Throwable::printStackTrace
-        );
+        navigateBackButtonEvent();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        disposable.dispose();
+    /**
+     * MemoSafeArgsViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
+     *
+     * @see MemoSafeArgsViewModel#getBackButtonEvent()
+     */
+    private void navigateBackButtonEvent() {
+        memoSafeArgsViewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), observer ->
+                Navigation.findNavController(requireView()).popBackStack()
+        );
     }
 }

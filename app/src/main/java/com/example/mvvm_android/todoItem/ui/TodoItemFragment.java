@@ -18,6 +18,9 @@ import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentTodoItemBinding;
 import com.example.mvvm_android.todoList.ui.TodoListFragmentDirections;
 
+/**
+ * TodoListFragment 내부의 LinearLayout에 붙이는 Todo 내용이 담긴 Fragment
+ */
 public class TodoItemFragment extends Fragment {
     private TodoItemViewModel todoItemViewModel;
     private FragmentTodoItemBinding binding;
@@ -26,10 +29,15 @@ public class TodoItemFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Todo의 id를 기반으로 새로운 instance를 만든다.
+     *
+     * @param id todo의 id
+     * @return 생성된 TodoItemFragment 전송
+     */
     public static TodoItemFragment newInstance(Long id) {
         TodoItemFragment fragment = new TodoItemFragment();
         Bundle args = new Bundle();
-        // 이걸 나눠서 담아..?
         args.putLong("id", id);
         fragment.setArguments(args);
         return fragment;
@@ -57,16 +65,19 @@ public class TodoItemFragment extends Fragment {
         binding.setViewModel(todoItemViewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
-        // 이게 onCreated가 아니라 onViewCreated에 있어도 괜찮은가?
         if (getArguments() != null) {
             Long id = getArguments().getLong("id");
 
             todoItemViewModel.setTodoItem(id);
         }
 
+        navigateTodoDetailButtonEvent();
+    }
+
+    private void navigateTodoDetailButtonEvent() {
         // viewModel의 startTodoDetailActivity observe
         todoItemViewModel.getStartTodoDetailActivity().observe(getViewLifecycleOwner(), unused -> {
-            NavController navController = Navigation.findNavController(view);
+            NavController navController = Navigation.findNavController(requireView());
 
             NavDirections action = TodoListFragmentDirections.actionTodoListFragmentToTodoDetailFragment(getArguments().getLong("id"));
 

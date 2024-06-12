@@ -1,5 +1,8 @@
 package com.example.mvvm_android.todoCore.domain.model;
 
+/**
+ * Todo item을 표현하기 위한 Plain Java Object
+ */
 public class Todo {
     private long id;
     private String content;

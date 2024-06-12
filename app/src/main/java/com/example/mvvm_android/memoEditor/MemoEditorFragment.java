@@ -1,9 +1,3 @@
-/**
- * 하단 BottomNavBar를 통해 Fragment -> Fragment 이동
- * ViewModel에 RxJava 적용
- * Navigation을 통해 이동 (Bundle, SafeArgs, ViewModel 공유로 데이터 전달)
-* */
-
 package com.example.mvvm_android.memoEditor;
 
 import androidx.databinding.DataBindingUtil;
@@ -18,26 +12,23 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoBinding;
+import com.example.mvvm_android.memoItem.view.MemoViewModelFragment;
 
-import java.util.Objects;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
-
+/**
+ * memo editor를 가지고 있는 fragment
+ * memoItem의 fragment로 이동 역시 여기서 이뤄짐.
+ */
 public class MemoEditorFragment extends Fragment {
 
     private MemoEditorViewModel memoEditorViewModel;
     private FragmentMemoBinding binding;
-
-    // RxJava의 Observable을 구독하기 위해 사용. fragment의 lifeCycle에 맞춰 종료하기 위해 선언.
-    private Disposable disposable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -55,33 +46,35 @@ public class MemoEditorFragment extends Fragment {
         binding.setViewModel(memoEditorViewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
-        // 다른 fragment로 이동하기 위해 RxJava를 사용
-        disposable = memoEditorViewModel.getMoveEventLabel().observeOn(AndroidSchedulers.mainThread()).subscribe(
-                label -> {
+        navigateMemoNavigationEvent();
+    }
+
+    /**
+     * memoNavigationEvent를 observe하여 알맞은 fragment로 이동
+     *
+     * @see com.example.mvvm_android.memoItem.view.MemoSafeArgsFragment
+     * @see com.example.mvvm_android.memoItem.view.MemoBundleFragment
+     * @see MemoViewModelFragment
+     */
+    private void navigateMemoNavigationEvent() {
+        memoEditorViewModel.getMemoNavigationEvent().observe(getViewLifecycleOwner(), label -> {
                     NavController navController = Navigation.findNavController(requireView());
-                    switch (label){
+                    switch (label) {
                         case "SafeArgs":
                             NavDirections action =
-                                    MemoEditorFragmentDirections.actionMemoFragmentToMemoSafeArgsFragment(memoEditorViewModel.getContent().get());
+                                    MemoEditorFragmentDirections.actionMemoFragmentToMemoSafeArgsFragment(memoEditorViewModel.getContent().getValue());
                             navController.navigate(action);
                             break;
                         case "Bundle":
                             Bundle bundle = new Bundle();
-                            bundle.putString("content", memoEditorViewModel.getContent().get());
+                            bundle.putString("content", memoEditorViewModel.getContent().getValue());
                             navController.navigate(R.id.action_memoFragment_to_memoBundleFragment, bundle);
                             break;
                         case "ViewModel":
                             navController.navigate(R.id.memoVMFragment);
                             break;
                     }
-                },
-                error -> Log.e("MemoFragment", Objects.requireNonNull(error.getMessage()))
+                }
         );
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        disposable.dispose();
     }
 }

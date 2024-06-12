@@ -25,7 +25,7 @@ public class GetAllTodoAsyncUseCase {
                                 todoRecord.getId(),
                                 todoRecord.getContent(),
                                 todoRecord.isCompleted(),
-                                todoRecord.getDatetime())
+                                todoRecord.getCreatedAt())
                         );
                     }
 

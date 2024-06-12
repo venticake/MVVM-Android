@@ -11,12 +11,16 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+/**
+ * TodoDetailFragment에서 사용하는 ViewModel
+ * SafeArgs를 통하여 Todo의 id를 받아온다.
+ */
 public class TodoDetailViewModel extends ViewModel {
     private final MutableLiveData<String> content = new MutableLiveData<>("this is dummy");
     private final MutableLiveData<String> createdAt = new MutableLiveData<>("2024-01-01");
     private final MutableLiveData<String> isDone = new MutableLiveData<>("nope");
 
-    private final SingleLiveEvent<Void> backToList = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> backButtonEvent = new SingleLiveEvent<>();
 
     private final FindTodoByIdUseCase findTodoByIdUsecase;
 
@@ -38,12 +42,16 @@ public class TodoDetailViewModel extends ViewModel {
         return isDone;
     }
 
-    public LiveData<Void> getBackToList() {
-        return backToList;
+    public LiveData<Void> getBackButtonEvent() {
+        return backButtonEvent;
     }
 
+    /**
+     * id를 통해 Todo를 찾아서 LiveData에 담는다.
+     *
+     * @param id Todo의 id
+     */
     public void setTodo(Long id) {
-        // usecase를 통해 realm에서 todo를 가져온다.
         disposable = findTodoByIdUsecase.execute(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,10 +65,16 @@ public class TodoDetailViewModel extends ViewModel {
                 );
     }
 
-    public void backToList() {
-        backToList.call();
+    /**
+     * BackButton을 눌렀을 때 발생하는 이벤트 처리
+     */
+    public void handleBackButtonEvent() {
+        backButtonEvent.call();
     }
 
+    /**
+     * RxJava의 disposable과 ViewModel의 생애주기를 맞추기 위해 사용
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

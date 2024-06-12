@@ -17,18 +17,16 @@ import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoBundleBinding;
 import com.example.mvvm_android.memoItem.viewModel.MemoBundleViewModel;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
-
+/**
+ * MemoEditorFragment에서 작성한 내용을 표현하는 fragment
+ * Navigation을 통한 이동 시 데이터를 Bundle에 담아 전송.
+ */
 public class MemoBundleFragment extends Fragment {
     MemoBundleViewModel memoBundleViewModel;
     FragmentMemoBundleBinding binding;
 
-    Disposable disposable;
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_memo_bundle, container, false);
         // Inflate the layout for this fragment
 
@@ -43,22 +41,18 @@ public class MemoBundleFragment extends Fragment {
         binding.setViewModel(memoBundleViewModel);
         binding.setLifecycleOwner(this);
 
-        assert getArguments() != null;
-        String content = getArguments().getString("content");
+        String content = getArguments() != null ? getArguments().getString("content") : "dummyData";
 
         memoBundleViewModel.setContent(content);
 
-        disposable = memoBundleViewModel.getBackButton()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                aObject -> Navigation.findNavController(requireView()).popBackStack(),
-                Throwable::printStackTrace
-        );
+        navigateBackButtonEvent();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        disposable.dispose();
+    /**
+     * MemoBundleViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
+     * @see MemoBundleViewModel#getBackButtonEvent()
+     * */
+    private void navigateBackButtonEvent() {
+        memoBundleViewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), observer -> Navigation.findNavController(requireView()).popBackStack());
     }
 }

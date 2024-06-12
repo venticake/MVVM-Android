@@ -2,6 +2,7 @@ package com.example.mvvm_android.todoItem.domain.usecase;
 
 import com.example.mvvm_android.todoCore.data.repository.TodoRepository;
 
+
 public class UpdateTodoStatusUseCase {
     private final TodoRepository todoRepository;
 

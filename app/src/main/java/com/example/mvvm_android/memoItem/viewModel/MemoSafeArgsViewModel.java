@@ -1,28 +1,42 @@
 package com.example.mvvm_android.memoItem.viewModel;
 
-import androidx.databinding.ObservableField;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import com.example.mvvm_android.util.SingleLiveEvent;
 
+/**
+ * MemoSafeArgsFragment의 Viewmodel
+ * content를 통해 MemoEditor에서 작성한 내용을 확인 가능
+ */
 public class MemoSafeArgsViewModel extends ViewModel {
-    private final ObservableField<String> content = new ObservableField<>("dummy");
-    private final PublishSubject<Object> backButton = PublishSubject.create();
+    // 데이터 변경 접근 제어, 책임 분리, 테스트 용이성을 위해 MutableLiveData와 LiveData를 사용.
+    private final MutableLiveData<String> content = new MutableLiveData<String>("dummy") {
+    };
+    private final SingleLiveEvent<Void> backButtonEvent = new SingleLiveEvent<>();
 
-    public ObservableField<String> getContent() {
+    public LiveData<String> getContent() {
         return content;
     }
 
-    public void setContent(String content){
-        this.content.set(content);
+    /**
+     * MemoEditorFragment에서 작성한 글 내용 동기화
+     */
+    public void setContent(String content) {
+        this.content.setValue(content);
     }
 
-    public Observable<Object> getBackButton(){
-        return backButton;
+    public LiveData<Void> getBackButtonEvent() {
+        return backButtonEvent;
     }
 
-    public void setBackButton(){
-        backButton.onNext(new Object());
+    /**
+     * MemoEditorFragment로 되돌아간다.
+     *
+     * @see com.example.mvvm_android.memoEditor.MemoEditorFragment
+     */
+    public void handleBackButtonEvent() {
+        backButtonEvent.call();
     }
 }

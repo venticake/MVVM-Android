@@ -22,7 +22,7 @@ public class GetAllTodoUseCase {
         List<Todo> todos = new ArrayList<>();
 
         for(TodoRecord todoRecord : realmResults) {
-            Todo todo = new Todo(todoRecord.getId(), todoRecord.getContent(), todoRecord.isCompleted(), todoRecord.getDatetime());
+            Todo todo = new Todo(todoRecord.getId(), todoRecord.getContent(), todoRecord.isCompleted(), todoRecord.getCreatedAt());
             todos.add(todo);
         }
 

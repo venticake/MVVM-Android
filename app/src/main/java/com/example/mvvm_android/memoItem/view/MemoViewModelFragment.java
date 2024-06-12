@@ -16,21 +16,22 @@ import android.view.ViewGroup;
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoVMBinding;
 import com.example.mvvm_android.memoEditor.MemoEditorViewModel;
+import com.example.mvvm_android.memoItem.viewModel.MemoSafeArgsViewModel;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
-
-public class MemoVMFragment extends Fragment {
+/**
+ * MemoEditorFragment에서 작성한 내용을 표현하는 fragment
+ * MemoEditorViewModel을 공유하여 데이터 사용.
+ */
+public class MemoViewModelFragment extends Fragment {
     MemoEditorViewModel memoEditorViewModel;
     FragmentMemoVMBinding binding;
-
-    private Disposable disposable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_memo_v_m, container, false);
+        binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_memo_v_m, container, false);
         return binding.getRoot();
     }
 
@@ -41,15 +42,17 @@ public class MemoVMFragment extends Fragment {
         binding.setViewModel(memoEditorViewModel);
         binding.setLifecycleOwner(this);
 
-        disposable = memoEditorViewModel.getBackButton().observeOn(AndroidSchedulers.mainThread()).subscribe(
-                aObject -> Navigation.findNavController(requireView()).popBackStack(),
-                Throwable::printStackTrace
-        );
+        navigateBackButtonEvent();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        disposable.dispose();
+    /**
+     * MemoEditorViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
+     *
+     * @see MemoSafeArgsViewModel#getBackButtonEvent()
+     */
+    private void navigateBackButtonEvent() {
+        memoEditorViewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), memo ->
+                Navigation.findNavController(requireView()).popBackStack()
+        );
     }
 }

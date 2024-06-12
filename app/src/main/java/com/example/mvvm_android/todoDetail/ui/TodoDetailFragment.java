@@ -15,6 +15,10 @@ import android.view.ViewGroup;
 
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentTodoDetailBinding;
+
+/**
+ * Todo의 내용들을 따로 표현하는 Fragment
+ */
 public class TodoDetailFragment extends Fragment {
 
     private TodoDetailViewModel viewModel;
@@ -37,6 +41,15 @@ public class TodoDetailFragment extends Fragment {
         Long id = TodoDetailFragmentArgs.fromBundle(getArguments()).getId();
         viewModel.setTodo(id);
 
-        viewModel.getBackToList().observe(getViewLifecycleOwner(), todo -> Navigation.findNavController(view).popBackStack());
+        navigateBackButtonEvent();
+    }
+
+    /**
+     * TodoDetailViewModel의 backButtonEvent를 통하여 TodoListFragment로 되돌아가는 메서드
+     *
+     * @see com.example.mvvm_android.todoList.ui.TodoListFragment
+     */
+    private void navigateBackButtonEvent() {
+        viewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), todo -> Navigation.findNavController(requireView()).popBackStack());
     }
 }
