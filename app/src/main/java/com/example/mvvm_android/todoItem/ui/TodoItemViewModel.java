@@ -12,7 +12,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+/**
+ * TodoItemFragment의 ViewModel
+ * TodoList에서 받은 id를 가지고 Todo를 Realm에서 가져온다.
+ */
 public class TodoItemViewModel extends ViewModel {
+    // 데이터 변경 접근 제어, 책임 분리, 테스트 용이성을 위해 MutableLiveData와 LiveData를 사용.
     private final MutableLiveData<String> content = new MutableLiveData<>("This is content");
     private final MutableLiveData<Boolean> completed = new MutableLiveData<>(false);
     private final MutableLiveData<String> createdAt = new MutableLiveData<>("This is time");
@@ -43,10 +48,16 @@ public class TodoItemViewModel extends ViewModel {
     private Disposable disposable;
 
     public TodoItemViewModel() {
-        this.updateTodoStatusAsyncUseCase = new UpdateTodoStatusAsyncUseCase();
+        updateTodoStatusAsyncUseCase = new UpdateTodoStatusAsyncUseCase();
         findTodoByIdUsecase = new FindTodoByIdUseCase();
     }
 
+    /**
+     * TodoItemFragment에서 받은 id를 가지고 Todo를 Realm에서 가져온다.
+     * 비동기 연산
+     *
+     * @param id todo의 id, id > 0
+     */
     public void setTodoItem(Long id) {
         this.id = id;
         disposable = findTodoByIdUsecase.execute(id)
@@ -63,8 +74,8 @@ public class TodoItemViewModel extends ViewModel {
     }
 
     /**
-     * Done 클릭 시 checked 값 변경
-     * 또한 content와 createdDate 글자색을 회색으로 변경
+     * Done 클릭 시 checked 값을 true <-> false로 변경
+     * content와 createdDate 글자색을 회색으로 변경
      */
     public void onDoneClicked() {
 
@@ -76,6 +87,9 @@ public class TodoItemViewModel extends ViewModel {
         startTodoDetailActivity.call();
     }
 
+    /**
+     * disposable과 생애주기를 맞추기 위해 Override.
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

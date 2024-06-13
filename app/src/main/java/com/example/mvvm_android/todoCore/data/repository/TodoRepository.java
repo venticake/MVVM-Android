@@ -125,7 +125,7 @@ public class TodoRepository {
      * Realm DB의 모든 Todo를 조회
      *
      * @return RealmResults<TodoRecord>
-     * */
+     */
     public RealmResults<TodoRecord> getAllTodos() {
         return realm.where(TodoRecord.class).findAll();
     }
@@ -134,7 +134,7 @@ public class TodoRepository {
      * Realm DB의 모든 Todo를 비동기적으로 조회
      *
      * @return 조회가 완료됐을 때 emit하는 Single<RealmResults<TodoRecord>
-     * */
+     */
     public Single<RealmResults<TodoRecord>> getAllTodosAsync() {
         return Single.create(emitter -> {
             handler.post(() -> {
@@ -155,7 +155,7 @@ public class TodoRepository {
     /**
      * id를 기반으로 Realm DB에서 Todo를 찾아 완료 상태를 업데이트
      *
-     * @param id Todo의 id
+     * @param id        Todo의 id
      * @param completed Todo의 상태 (true: 완료, false: 미완료)
      */
     public void updateTodoStatus(Long id, boolean completed) {

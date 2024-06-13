@@ -16,6 +16,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * SafeArgs를 통하여 Todo의 id를 받아온다.
  */
 public class TodoDetailViewModel extends ViewModel {
+    // 데이터 변경 접근 제어, 책임 분리, 테스트 용이성을 위해 MutableLiveData와 LiveData를 사용.
     private final MutableLiveData<String> content = new MutableLiveData<>("this is dummy");
     private final MutableLiveData<String> createdAt = new MutableLiveData<>("2024-01-01");
     private final MutableLiveData<String> isDone = new MutableLiveData<>("nope");

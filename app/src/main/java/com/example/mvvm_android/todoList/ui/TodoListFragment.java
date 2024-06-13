@@ -21,6 +21,10 @@ import com.example.mvvm_android.todoItem.ui.TodoItemFragment;
 import com.example.mvvm_android.databinding.FragmentTodoListBinding;
 import com.example.mvvm_android.todoCore.domain.model.Todo;
 
+/**
+ * Todo 목록을 표현하는 Fragment
+ * Todo의 메인 Fragment.
+ */
 public class TodoListFragment extends Fragment {
     private TodoListViewModel todoListViewModel;
     private FragmentTodoListBinding binding;
@@ -65,6 +69,9 @@ public class TodoListFragment extends Fragment {
         observeEvent();
     }
 
+    /**
+     * Todo 업데이트에 맞추어 LinearLayout에 TodoItemFragment를 추가하는 메소드
+     */
     private void observeEvent() {
         todoListViewModel.getTodoList().observe(getViewLifecycleOwner(), todoList -> {
             // todoCounter가 0인 경우: 아무것도 추가되지 않음 -> 전체 만듬

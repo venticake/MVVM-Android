@@ -16,6 +16,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
+/**
+ * TodoListFragment에서 사용하는 ViewModel
+ */
 public class TodoListViewModel extends ViewModel {
 
     private final MutableLiveData<List<Todo>> todoList = new MutableLiveData<>();
@@ -39,6 +42,9 @@ public class TodoListViewModel extends ViewModel {
         fetchTodos();
     }
 
+    /**
+     * 모든 Todo를 가져오는 메서드
+     */
     public void fetchTodos() {
         getAllTodoDisposable = useCaseGetAllTodo.execute()
                 .subscribeOn(Schedulers.io())
@@ -49,6 +55,9 @@ public class TodoListViewModel extends ViewModel {
                 );
     }
 
+    /**
+     * Todo를 추가하는 메서드
+     */
     public void addTodoItem() {
         addTodoDisposable = useCaseAddTodo.execute()
                 .subscribeOn(Schedulers.io())
@@ -59,11 +68,17 @@ public class TodoListViewModel extends ViewModel {
                 );
     }
 
+    /**
+     * 모든 Todo를 삭제하는 메서드
+     */
     public void clearTodoList() {
         useCaseClearAllTodo.execute();
         todoList.setValue(new ArrayList<>());
     }
 
+    /**
+     * Disposable과 ViewModel의 lifecycle을 맞춰주기 위해 Override
+     */
     @Override
     protected void onCleared() {
         super.onCleared();
