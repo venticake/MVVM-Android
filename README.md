@@ -1,5 +1,13 @@
 ## MVVM-Android
 
+### 요점
+- view의 이벤트 -> controller(activity, fragment)가 받은 뒤 -> viewModel 값 수정 또는 메소드 실행
+- viewModel의 상태 변화
+  - -> controller(activity, fragment)가 observing 하다가 -> UI 업데이트
+  - -> view xml에서 data binding으로 바로 업데이트
+
+// TODO: 샘플 코드 일부 수정해야함 (view 이벤트를 viewModel이 아닌 controller가 직접 받기)
+
 ---
 
 3-layer (UI + domain + data)구조에 MVVM을 추가하여 설계된 Android 샘플 프로젝트입니다.
