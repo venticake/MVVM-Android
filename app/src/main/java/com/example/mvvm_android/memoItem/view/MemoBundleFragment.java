@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoBundleBinding;
 import com.example.mvvm_android.memoItem.viewModel.MemoBundleViewModel;
+import com.example.mvvm_android.memoItem.viewModel.MemoSafeArgsViewModel;
 
 /**
  * MemoEditorFragment에서 작성한 내용을 표현하는 fragment
@@ -45,14 +46,11 @@ public class MemoBundleFragment extends Fragment {
 
         memoBundleViewModel.setContent(content);
 
-        navigateBackButtonEvent();
-    }
-
-    /**
-     * MemoBundleViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
-     * @see MemoBundleViewModel#getBackButtonEvent()
-     * */
-    private void navigateBackButtonEvent() {
-        memoBundleViewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), observer -> Navigation.findNavController(requireView()).popBackStack());
+        /**
+         * MemoEditorViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
+         *
+         * @see MemoSafeArgsViewModel#getBackButtonEvent()
+         */
+        binding.backToMemo.setOnClickListener(v -> Navigation.findNavController(requireView()).popBackStack());
     }
 }

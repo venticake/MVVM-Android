@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
             android:layout_marginBottom="16dp"
-            android:onClick="@{() -> viewModel.addTodoItem()}"
             android:text="@string/add_todo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -41,7 +40,6 @@
             android:layout_marginEnd="36dp"
             android:layout_marginBottom="16dp"
             android:text="@string/clear_all_todo"
-            android:onClick="@{() -> viewModel.clearTodoList()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

@@ -1,6 +1,9 @@
 package com.example.mvvm_android.memoItem.view;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,10 +11,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentMemoVMBinding;
@@ -42,17 +41,11 @@ public class MemoViewModelFragment extends Fragment {
         binding.setViewModel(memoEditorViewModel);
         binding.setLifecycleOwner(this);
 
-        navigateBackButtonEvent();
-    }
-
-    /**
-     * MemoEditorViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
-     *
-     * @see MemoSafeArgsViewModel#getBackButtonEvent()
-     */
-    private void navigateBackButtonEvent() {
-        memoEditorViewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), memo ->
-                Navigation.findNavController(requireView()).popBackStack()
-        );
+        /**
+         * MemoEditorViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
+         *
+         * @see MemoSafeArgsViewModel#getBackButtonEvent()
+         */
+        binding.backToMemo.setOnClickListener(v -> Navigation.findNavController(requireView()).popBackStack());
     }
 }

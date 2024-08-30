@@ -18,8 +18,6 @@ import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentTodoItemBinding;
 import com.example.mvvm_android.todoList.ui.TodoListFragmentDirections;
 
-import java.util.Objects;
-
 /**
  * TodoListFragment 내부의 LinearLayout에 붙이는 Todo 내용이 담긴 Fragment
  */
@@ -73,21 +71,14 @@ public class TodoItemFragment extends Fragment {
             todoItemViewModel.setTodoItem(id);
         }
 
-        navigateTodoDetailButtonEvent();
-    }
-
-    /**
-     * todoDetail로 이동하는 메서드
-     * 파라메터로 todoItemFragment에 저장되어 있는 id를 사용한다.
-     */
-    private void navigateTodoDetailButtonEvent() {
-        // viewModel의 startTodoDetailActivity observe
-        todoItemViewModel.getStartTodoDetailActivity().observe(getViewLifecycleOwner(), unused -> {
+        binding.getRoot().setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireView());
 
             NavDirections action = TodoListFragmentDirections.actionTodoListFragmentToTodoDetailFragment(requireArguments().getLong("id"));
 
             navController.navigate(action);
         });
+
+        binding.doneButton.setOnClickListener(v -> todoItemViewModel.onDoneClicked());
     }
 }

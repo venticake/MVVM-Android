@@ -17,9 +17,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mvvm_android.R;
-import com.example.mvvm_android.todoItem.ui.TodoItemFragment;
 import com.example.mvvm_android.databinding.FragmentTodoListBinding;
 import com.example.mvvm_android.todoCore.domain.model.Todo;
+import com.example.mvvm_android.todoItem.ui.TodoItemFragment;
 
 /**
  * Todo 목록을 표현하는 Fragment
@@ -29,6 +29,7 @@ public class TodoListFragment extends Fragment {
     private TodoListViewModel todoListViewModel;
     private FragmentTodoListBinding binding;
     private int todoCounter = 0;
+
     public TodoListFragment() {
         // Required empty public constructor
     }
@@ -67,6 +68,10 @@ public class TodoListFragment extends Fragment {
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         observeEvent();
+
+        binding.AddTodoButton.setOnClickListener(v -> todoListViewModel.addTodoItem());
+
+        binding.ClearAllTodoButton.setOnClickListener(v -> todoListViewModel.clearTodoList());
     }
 
     /**
@@ -75,23 +80,23 @@ public class TodoListFragment extends Fragment {
     private void observeEvent() {
         todoListViewModel.getTodoList().observe(getViewLifecycleOwner(), todoList -> {
             // todoCounter가 0인 경우: 아무것도 추가되지 않음 -> 전체 만듬
-            if(todoCounter == 0){
+            if (todoCounter == 0) {
                 getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                if(!todoList.isEmpty()){
+                if (!todoList.isEmpty()) {
                     for (Todo todo : todoList) {
                         addTodoItemFragment(todo);
                     }
                     Log.d("todoCounter", "total Todo added");
                 }
-            }else{
-                if(todoList.isEmpty()){
+            } else {
+                if (todoList.isEmpty()) {
                     // todoCounter가 0이 아니며, todoList의 크기가 0일 경우 : 투두 클러이 -> 전체 삭제
                     todoCounter = 0;
                     getChildFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     Log.d("todoCounter", "todo cleared");
-                }else if(todoList.size() > todoCounter){
+                } else if (todoList.size() > todoCounter) {
                     // todoCounter가 0이 아니며, todoList의 크기가 todo보다 클 경우 : 하나 추가됨 -> 마지막 하나 추가
-                    addTodoItemFragment(todoList.get(todoList.size()-1));
+                    addTodoItemFragment(todoList.get(todoList.size() - 1));
                     Log.d("todoCounter", "new Todo added " + todoList.size());
                 }
             }
@@ -100,8 +105,8 @@ public class TodoListFragment extends Fragment {
 
     /**
      * todoData를 기반으로 TodoItemFragment를 추가한다.
-     * */
-    public void addTodoItemFragment(Todo todo){
+     */
+    public void addTodoItemFragment(Todo todo) {
         int todoId = ++todoCounter;
         TodoItemFragment todoItemFragment = TodoItemFragment.newInstance(todo.getId());
 

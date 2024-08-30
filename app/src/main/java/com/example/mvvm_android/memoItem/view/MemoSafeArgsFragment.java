@@ -42,17 +42,11 @@ public class MemoSafeArgsFragment extends Fragment {
         String content = MemoSafeArgsFragmentArgs.fromBundle(this.getArguments()).getContent();
         memoSafeArgsViewModel.setContent(content);
 
-        navigateBackButtonEvent();
-    }
-
-    /**
-     * MemoSafeArgsViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
-     *
-     * @see MemoSafeArgsViewModel#getBackButtonEvent()
-     */
-    private void navigateBackButtonEvent() {
-        memoSafeArgsViewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), observer ->
-                Navigation.findNavController(requireView()).popBackStack()
-        );
+        /**
+         * MemoEditorViewModel의 backButtonEvent를 통하여 MemoEditorFragment로 되돌아가는 메서드
+         *
+         * @see MemoSafeArgsViewModel#getBackButtonEvent()
+         */
+        binding.backToMemo.setOnClickListener(v -> Navigation.findNavController(requireView()).popBackStack());
     }
 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.mvvm_android.todoDetail.domain.usecase.FindTodoByIdUseCase;
 import com.example.mvvm_android.todoItem.domain.usecase.UpdateTodoStatusAsyncUseCase;
-import com.example.mvvm_android.util.SingleLiveEvent;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -23,8 +22,6 @@ public class TodoItemViewModel extends ViewModel {
     private final MutableLiveData<String> createdAt = new MutableLiveData<>("This is time");
     private Long id;
 
-    private final SingleLiveEvent<Void> startTodoDetailActivity = new SingleLiveEvent<>();
-
 
     public LiveData<String> getContent() {
         return content;
@@ -36,10 +33,6 @@ public class TodoItemViewModel extends ViewModel {
 
     public LiveData<String> getCreatedAt() {
         return createdAt;
-    }
-
-    public LiveData<Void> getStartTodoDetailActivity() {
-        return startTodoDetailActivity;
     }
 
     private final UpdateTodoStatusAsyncUseCase updateTodoStatusAsyncUseCase;
@@ -81,10 +74,6 @@ public class TodoItemViewModel extends ViewModel {
 
         this.completed.setValue(Boolean.FALSE.equals(this.completed.getValue()));
         updateTodoStatusAsyncUseCase.execute(id, Boolean.TRUE.equals(isChecked().getValue()));
-    }
-
-    public void startTodoDetailActivity() {
-        startTodoDetailActivity.call();
     }
 
     /**

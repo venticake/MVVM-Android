@@ -1,17 +1,15 @@
 package com.example.mvvm_android.todoDetail.ui;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.mvvm_android.R;
 import com.example.mvvm_android.databinding.FragmentTodoDetailBinding;
@@ -41,15 +39,6 @@ public class TodoDetailFragment extends Fragment {
         Long id = TodoDetailFragmentArgs.fromBundle(getArguments()).getId();
         viewModel.setTodo(id);
 
-        navigateBackButtonEvent();
-    }
-
-    /**
-     * TodoDetailViewModel의 backButtonEvent를 통하여 TodoListFragment로 되돌아가는 메서드
-     *
-     * @see com.example.mvvm_android.todoList.ui.TodoListFragment
-     */
-    private void navigateBackButtonEvent() {
-        viewModel.getBackButtonEvent().observe(getViewLifecycleOwner(), todo -> Navigation.findNavController(requireView()).popBackStack());
+        binding.backToListButton.setOnClickListener(v -> Navigation.findNavController(requireView()).popBackStack());
     }
 }

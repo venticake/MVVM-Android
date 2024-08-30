@@ -21,8 +21,6 @@ public class TodoDetailViewModel extends ViewModel {
     private final MutableLiveData<String> createdAt = new MutableLiveData<>("2024-01-01");
     private final MutableLiveData<String> isDone = new MutableLiveData<>("nope");
 
-    private final SingleLiveEvent<Void> backButtonEvent = new SingleLiveEvent<>();
-
     private final FindTodoByIdUseCase findTodoByIdUsecase;
 
     private Disposable disposable;
@@ -43,10 +41,6 @@ public class TodoDetailViewModel extends ViewModel {
         return isDone;
     }
 
-    public LiveData<Void> getBackButtonEvent() {
-        return backButtonEvent;
-    }
-
     /**
      * id를 통해 Todo를 찾아서 LiveData에 담는다.
      *
@@ -64,13 +58,6 @@ public class TodoDetailViewModel extends ViewModel {
                         },
                         Throwable::printStackTrace
                 );
-    }
-
-    /**
-     * BackButton을 눌렀을 때 발생하는 이벤트 처리
-     */
-    public void handleBackButtonEvent() {
-        backButtonEvent.call();
     }
 
     /**
